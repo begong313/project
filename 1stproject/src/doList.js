@@ -2,12 +2,14 @@ import { useState } from "react";
 import DatePicker from "react-date-picker";
 import "./doList.css";
 import React from "react";
+import Diary from "./diary";
 
 function DoList() {
   //해야될일 배열
   const [dolist, setdolist] = useState([]);
   //완료한일 배열
   const [cpltList, setCpltList] = useState([]);
+  //일기배열
 
   //날짜 설정
   const [today, setToday] = useState(new Date());
@@ -61,49 +63,60 @@ function DoList() {
       <h1>
         {year}년 {month}월 {day}일의 기록
       </h1>
-      <form onSubmit={onSubmit}>
-        <DatePicker value={today} onChange={setToday} />
-        <input
-          className="doinput"
-          onChange={onChange}
-          value={Todo}
-          placeholder="입력하시오"
-        />
-        <button>Add To Do</button>
-      </form>
-      <hr />
-      <ul>
-        <h3>해야될일</h3>
+
+      <div className="dolist">
+        <h2>DoList</h2>
         <hr />
-        {dolist.map((item, index) => (
-          <li key={index}>
-            {item.Todo}{" "}
-            <a className="date">
-              {item.yymmdd}
-              <button onClick={cpltClick} className={index}>
-                ✓
-              </button>
-              <button onClick={dolistDlt} className={index}>
-                X
-              </button>
-            </a>
-          </li>
-        ))}
-        <h3>완료한일</h3>
-        <hr />
-        {cpltList.map((item, index) => (
-          <li key={index}>
-            {item.Todo}
-            <a className="date">
-              등록일 : {item.yymmdd}{" "}
-              <b className="cpltdate">완료일 : {item.cyymmdd}</b>
-              <button onClick={cpltDlt} className={index}>
-                X
-              </button>
-            </a>
-          </li>
-        ))}
-      </ul>
+        <form onSubmit={onSubmit} className="doform">
+          <DatePicker
+            value={today}
+            onChange={setToday}
+            className="datepicker"
+          />
+          <input
+            className="doinput"
+            onChange={onChange}
+            value={Todo}
+            placeholder="입력하시오"
+          />
+          <button className="doinput">Add To Do</button>
+        </form>
+        <ul>
+          <h3>해야될일</h3>
+          <hr />
+          {dolist.map((item, index) => (
+            <li key={index}>
+              {item.Todo}{" "}
+              <a className="date">
+                등록일 : {item.yymmdd}
+                <button onClick={cpltClick} className={index}>
+                  ✓
+                </button>
+                <button onClick={dolistDlt} className={index}>
+                  X
+                </button>
+              </a>
+            </li>
+          ))}
+          <h3>완료한일</h3>
+          <hr />
+          {cpltList.map((item, index) => (
+            <li key={index}>
+              {item.Todo}
+              <a className="date">
+                등록일 : {item.yymmdd}{" "}
+                <b className="cpltdate">완료일 : {item.cyymmdd}</b>
+                <button onClick={cpltDlt} className={index}>
+                  X
+                </button>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="diary">
+        <Diary />
+      </div>
     </div>
   );
 }

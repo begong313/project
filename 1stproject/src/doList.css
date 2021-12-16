@@ -3,10 +3,26 @@
   right: 0px;
 }
 .doinput {
-  margin-left: 50px;
+  height: 25px;
+}
+.datepicker {
+  margin-right: 50px;
 }
 
 .cpltdate {
   margin-left: 50px;
   font-weight: normal;
+}
+.dolist {
+  margin: auto;
+  padding: 10px;
+  width: 90%;
+}
+.diary {
+  margin: auto;
+  padding: 10px;
+  width: 90%;
+}
+.doform {
+  float: right;
 }

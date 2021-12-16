@@ -4,7 +4,10 @@ import "./doList.css";
 import React from "react";
 
 function DoList() {
-  const [Todo, setToDo] = useState("");
+  //해야될일 배열
+  const [dolist, setdolist] = useState([]);
+  //완료한일 배열
+  const [cpltList, setCpltList] = useState([]);
 
   //날짜 설정
   const [today, setToday] = useState(new Date());
@@ -12,8 +15,8 @@ function DoList() {
   const month = today != null ? today.getMonth() + 1 : "";
   const day = today != null ? today.getDate() : "";
 
-  // 입력창
-  const [dolist, setdolist] = useState([]);
+  // 입력창 동작
+  const [Todo, setToDo] = useState("");
   const onChange = (event) => setToDo(event.target.value);
 
   //제출버튼
@@ -28,10 +31,23 @@ function DoList() {
   };
 
   //삭제버튼 기능
-  const onClick = (event) => {
-    console.log(event.target.id);
-    dolist.splice(event.target.id, 1);
+  const dolistDlt = (event) => {
+    dolist.splice(event.target.className, 1);
     refresh();
+  };
+
+  //cplt 삭제
+  const cpltDlt = (event) => {
+    cpltList.splice(event.target.className, 1);
+    refresh();
+  };
+
+  //완료버튼 기능
+  const cpltClick = (event) => {
+    const cplt = dolist[event.target.className];
+    cplt.cyymmdd = `${year}년 ${month}월 ${day}일`;
+    setCpltList((currentArray) => [cplt, ...currentArray]);
+    dolistDlt(event);
   };
 
   //화면 갱신할때
@@ -45,19 +61,43 @@ function DoList() {
       <h1>
         {year}년 {month}월 {day}일의 기록
       </h1>
-      <DatePicker value={today} onChange={setToday} />
       <form onSubmit={onSubmit}>
-        <input onChange={onChange} value={Todo} placeholder="입력하시오" />
+        <DatePicker value={today} onChange={setToday} />
+        <input
+          className="doinput"
+          onChange={onChange}
+          value={Todo}
+          placeholder="입력하시오"
+        />
         <button>Add To Do</button>
       </form>
       <hr />
       <ul>
+        <h3>해야될일</h3>
+        <hr />
         {dolist.map((item, index) => (
           <li key={index}>
             {item.Todo}{" "}
             <a className="date">
               {item.yymmdd}
-              <button onClick={onClick} id={index}>
+              <button onClick={cpltClick} className={index}>
+                ✓
+              </button>
+              <button onClick={dolistDlt} className={index}>
+                X
+              </button>
+            </a>
+          </li>
+        ))}
+        <h3>완료한일</h3>
+        <hr />
+        {cpltList.map((item, index) => (
+          <li key={index}>
+            {item.Todo}
+            <a className="date">
+              등록일 : {item.yymmdd}{" "}
+              <b className="cpltdate">완료일 : {item.cyymmdd}</b>
+              <button onClick={cpltDlt} className={index}>
                 X
               </button>
             </a>
@@ -69,6 +109,3 @@ function DoList() {
 }
 
 export default DoList;
-
-
-// 내일 해볼것 1.날자별 조회기능 만들기

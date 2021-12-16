@@ -2,3 +2,11 @@
   position: absolute;
   right: 0px;
 }
+.doinput {
+  margin-left: 50px;
+}
+
+.cpltdate {
+  margin-left: 50px;
+  font-weight: normal;
+}

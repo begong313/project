@@ -1,6 +1,6 @@
 .date {
-  position: absolute;
-  right: 0px;
+  position: fixed;
+  right: 10%;
 }
 .doinput {
   height: 25px;

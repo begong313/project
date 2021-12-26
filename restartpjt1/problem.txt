@@ -1,0 +1,22 @@
+문제점
+
+1. 자료구조
+    전체
+        -todo
+          ⎿cplt todo
+            ⎿날짜별
+              ⎿순서
+          ⎿todo
+            ⎿날짜별
+              ⎿순서
+        
+        -diary
+
+로 가야되는데 
+    전체
+        -todo
+        -cplt todo
+        -diary
+형태임.
+유저받으려면 전체 - 유저- todo -cplt todo 순이여야함 (한단계더추가)
+

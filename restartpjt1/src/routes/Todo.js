@@ -1,24 +1,34 @@
-import { addDoc, collection, getDocs, query } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
+  setDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
+import TodosDis from "../components/Todos";
 import { storageService } from "../fbase";
 
 const TODO = () => {
   const [todos, setTodos] = useState([]);
 
-  //todo 가져오기 (공부해야됨.)
-  const getTodos = async () => {
-    const q = query(collection(storageService, "todos"));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      const todolist = {
-        ...doc.data(),
-        date: doc.createAt,
-      };
-      setTodos((prev) => [todolist, ...prev]);
-    });
-  };
+  // 자동 todo 가져오기
   useEffect(() => {
-    getTodos();
+    const q = query(
+      collection(storageService, "todos"),
+      orderBy("order", "desc")
+    );
+    onSnapshot(q, (snapshot) => {
+      const todoArray = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+        day: doc.creatAt,
+      }));
+      setTodos(todoArray);
+    });
   }, []);
 
   //입력창 동작
@@ -30,13 +40,26 @@ const TODO = () => {
     setToDo(value);
   };
 
+  const timevalue = () => Date.now().toString();
   //todo 전송
   const onSubmit = async (event) => {
     event.preventDefault();
-    await addDoc(collection(storageService, "todos"), {
-      Todo,
-      createAt: Date.now(),
+    await setDoc(doc(storageService, "todos", timevalue()), {
+      text: Todo,
+      createAt: setdate(),
+      order: Date.now(),
     });
+    setToDo("");
+  };
+
+  //날짜세팅
+  const setdate = () => {
+    const todate = new Date();
+    const year = todate.getFullYear();
+    const month = todate.getMonth() + 1;
+    const day = todate.getDate();
+    const yymmdd = `${year}${month}${day}`.toString();
+    return yymmdd;
   };
 
   return (
@@ -52,11 +75,11 @@ const TODO = () => {
         />
         <input type="submit" value="추가" />
       </form>
+      <hr></hr>
+      <>todo</>
       <div>
         {todos.map((todo) => (
-          <div>
-            <h4>{todo.Todo}</h4>
-          </div>
+          <TodosDis key={todo.id} todosObj={todo} />
         ))}
       </div>
     </div>

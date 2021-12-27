@@ -3,22 +3,22 @@ import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
-    <nav>
+    <div className="groupNav">
       <ul>
-        <li>
+        <li className="navItem">
           <Link to="">home</Link>
         </li>
-        <li>
+        <li className="navItem">
           <Link to="/profile">profile</Link>
         </li>
-        <li>
+        <li className="navItem">
           <Link to="/TODO">ToDo</Link>
         </li>
-        <li>
+        <li className="navItem">
           <Link to="/Diary">Diary</Link>
         </li>
       </ul>
-    </nav>
+    </div>
   );
 };
 

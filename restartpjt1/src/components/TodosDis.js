@@ -28,10 +28,12 @@ const TodosDis = ({ todosObj }) => {
 
   return (
     <div className="todoBox">
-      <h4>{todosObj.text}</h4>
-      <h4>{datedis(todosObj.createAt)}</h4>
-      <button onClick={onDltClk}>Delete</button>
-      <button>complete</button>
+      <div className="todotext">{todosObj.text}</div>
+      <div className="tododate">
+        {datedis(todosObj.createAt)}
+        <button onClick={onDltClk}>Delete</button>
+        <button>complete</button>
+      </div>
     </div>
   );
 };

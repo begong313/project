@@ -1,12 +1,39 @@
+div {
+  display: block;
+}
 .title {
   text-align: center;
   font-size: 31px;
 }
 .todoBox {
-  margin-bottom: 20px;
-  padding: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
   border-radius: 10px;
   position: relative;
-  display: flex;
+  display: block;
   flex-direction: column;
+}
+.tododate {
+  width: 10%;
+  position: absolute;
+  right: 30px;
+  top: 0;
+}
+
+.todotext {
+  width: 80%;
+  display: inline-block;
+  position: relative;
+}
+
+.groupNav {
+  display: flex;
+  justify-content: center;
+}
+.navItem {
+  float: left;
+  display: block;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
 }

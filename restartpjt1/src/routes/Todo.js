@@ -9,7 +9,8 @@ import {
   setDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import TodosDis from "../components/Todos";
+import TodoCplt from "../components/TodoCplt";
+import TodosDis from "../components/TodosDis";
 import { storageService } from "../fbase";
 
 const TODO = () => {
@@ -64,23 +65,29 @@ const TODO = () => {
 
   return (
     <div>
-      <h1>TODO</h1>
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          className="doinput"
-          placeholder="입력하시오"
-          onChange={onChange}
-          value={Todo}
-        />
-        <input type="submit" value="추가" />
-      </form>
+      <div>
+        <h1>TODO</h1>
+        <form onSubmit={onSubmit}>
+          <input
+            type="text"
+            className="doinput"
+            placeholder="입력하시오"
+            onChange={onChange}
+            value={Todo}
+          />
+          <input type="submit" value="추가" />
+        </form>
+      </div>
       <hr></hr>
-      <>todo</>
       <div>
         {todos.map((todo) => (
           <TodosDis key={todo.id} todosObj={todo} />
         ))}
+      </div>
+      <div>
+        <h1>Complete</h1>
+        <hr></hr>
+        <TodoCplt />
       </div>
     </div>
   );

@@ -1,8 +1,6 @@
 import {
-  addDoc,
   collection,
   doc,
-  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -15,23 +13,35 @@ import { storageService } from "../fbase";
 
 const TODO = () => {
   const [todos, setTodos] = useState([]);
+  const [cptthing, setCptthing] = useState([]);
 
   // 자동 todo 가져오기
   useEffect(() => {
-    const q = query(
+    const todoquery = query(
       collection(storageService, "todos"),
       orderBy("order", "desc")
     );
-    onSnapshot(q, (snapshot) => {
+    onSnapshot(todoquery, (snapshot) => {
       const todoArray = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-        day: doc.creatAt,
       }));
       setTodos(todoArray);
     });
   }, []);
 
+  useEffect(() => {
+    const Cptquery = query(
+      collection(storageService, "CptTodos"),
+      orderBy("order", "desc")
+    );
+    onSnapshot(Cptquery, (snapshot) => {
+      const todoArray = snapshot.docs.map((doc) => ({
+        ...doc.data(),
+      }));
+      setCptthing(todoArray);
+    });
+  });
   //입력창 동작
   const [Todo, setToDo] = useState("");
   const onChange = (event) => {
@@ -81,13 +91,15 @@ const TODO = () => {
       <hr></hr>
       <div>
         {todos.map((todo) => (
-          <TodosDis key={todo.id} todosObj={todo} />
+          <TodosDis key={todo.id} todosObj={todo} date={setdate} />
         ))}
       </div>
       <div>
         <h1>Complete</h1>
         <hr></hr>
-        <TodoCplt />
+        {cptthing.map((cpt) => (
+          <TodoCplt key={cptthing.id} CptObj={cpt} />
+        ))}
       </div>
     </div>
   );

@@ -20,6 +20,14 @@ div {
   top: 0;
 }
 
+.cpltdate {
+  width: 13%;
+  position: absolute;
+  right: 30px;
+  top: 0;
+  white-space: pre-wrap;
+}
+
 .todotext {
   width: 80%;
   display: inline-block;
